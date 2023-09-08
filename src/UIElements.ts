@@ -19,8 +19,8 @@ export default class UIElements {
   public createStars(): void {
     for (let i = 0; i < this.numStars; i++) {
       this.stars.push({
-        x: Math.random() * state.screenWidth,
-        y: Math.random() * state.screenHeight,
+        x: Math.random() * state.canvasWidth,
+        y: Math.random() * state.canvasHeight,
         radius: Math.random() * 3,
         speed: Math.random() * 2 + 1,
         color: "#fff",
@@ -30,7 +30,7 @@ export default class UIElements {
 
   public renderBackgrounds(context: CanvasRenderingContext2D): void {
     context.fillStyle = "#000";
-    context.fillRect(0, 0, state.screenWidth, state.screenHeight);
+    context.fillRect(0, 0, state.canvasWidth, state.canvasHeight);
 
     for (let i = 0; i < this.stars.length; i++) {
       const star = this.stars[i];
@@ -40,7 +40,7 @@ export default class UIElements {
       context.fill();
       star.y -= star.speed;
       if (star.y < 0) {
-        star.y = state.screenHeight;
+        star.y = state.canvasHeight;
       }
     }
   }

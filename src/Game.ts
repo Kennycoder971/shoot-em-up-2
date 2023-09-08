@@ -1,6 +1,7 @@
 import UIElements from "./UIElements";
 import { loadAssets } from "./utils/loaders";
-import state from "./gameState";
+import Player, { playerInstance } from "./Player";
+
 export default class Game {
   public lastFrameTimeMs = 0;
   public accumulatedTime = 0;
@@ -8,12 +9,13 @@ export default class Game {
   public static instance: Game | null = null;
   public context: CanvasRenderingContext2D;
   public uiElements: UIElements;
+  player: Player | null = null;
 
   private constructor(public canvas: HTMLCanvasElement) {
     this.context = this.canvas.getContext("2d")!;
     this.uiElements = new UIElements();
-
-    console.log(state);
+    this.player = Player.getInstance();
+    this.player = playerInstance;
   }
 
   public static getInstance(canvas: HTMLCanvasElement) {
@@ -59,9 +61,9 @@ export default class Game {
     // Update game objects, handle input, check collisions, etc.
   }
 
-  // Render the game (called in the game loop)
   private render(): void {
     this.uiElements.renderBackgrounds(this.context);
+    this.player?.draw(this.context);
   }
 
   // Handle game over or game completion

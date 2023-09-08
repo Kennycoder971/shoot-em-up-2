@@ -20,4 +20,8 @@ export default class Character {
     }
     this.sprite.draw(context);
   }
+
+  setSprite(sprite: Sprite) {
+    this.sprite = sprite;
+  }
 }
