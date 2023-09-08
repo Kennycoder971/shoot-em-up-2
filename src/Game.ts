@@ -1,11 +1,20 @@
+import UIElements from "./UIElements";
 import { loadAssets } from "./utils/loaders";
-
+import state from "./gameState";
 export default class Game {
   public lastFrameTimeMs = 0;
   public accumulatedTime = 0;
   public maxTimeStep = 100;
   public static instance: Game | null = null;
-  private constructor(public canvas: HTMLCanvasElement) {}
+  public context: CanvasRenderingContext2D;
+  public uiElements: UIElements;
+
+  private constructor(public canvas: HTMLCanvasElement) {
+    this.context = this.canvas.getContext("2d")!;
+    this.uiElements = new UIElements();
+
+    console.log(state);
+  }
 
   public static getInstance(canvas: HTMLCanvasElement) {
     if (!Game.instance) {
@@ -21,6 +30,9 @@ export default class Game {
       // load enemies
       loadAssets("space-ships/en_", 10),
     ]);
+
+    const [backgrounds, enemies] = images;
+    this.uiElements.setBackGrounds(backgrounds[6], backgrounds[7]);
   }
 
   // Game loop
@@ -50,7 +62,7 @@ export default class Game {
 
   // Render the game (called in the game loop)
   private render(): void {
-    // Render game objects, UI elements, etc.
+    this.uiElements.renderBackgrounds(this.context);
   }
 
   // Handle game over or game completion

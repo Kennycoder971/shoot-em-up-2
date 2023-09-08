@@ -1,16 +1,31 @@
-async function loadAssets(path: string, numAssets: number) {
-  const arr: HTMLImageElement[] = [];
+function loadAssets(
+  assetName: string,
+  numAssets: number
+): Promise<HTMLImageElement[]> {
+  return new Promise((resolve, reject) => {
+    const loadedAssets: HTMLImageElement[] = [];
 
-  for (let i = 1; i < numAssets + 1; i++) {
-    const img = new Image();
-    img.src = `assets/${path}${i}.png`;
-    img.onload = () => {
-      arr.push(img);
+    const loadAssetAtIndex = (index: number) => {
+      const img = new Image();
+      img.src = `assets/${assetName}${index}.png`;
+
+      img.onload = () => {
+        loadedAssets.push(img);
+
+        if (loadedAssets.length === numAssets) {
+          resolve(loadedAssets);
+        } else {
+          loadAssetAtIndex(index + 1);
+        }
+      };
+
+      img.onerror = () => {
+        reject(`Failed to load asset: ${assetName}${index}.png`);
+      };
     };
-  }
 
-  return new Promise((resolve) => {
-    resolve(arr);
+    // Start loading the first asset
+    loadAssetAtIndex(1);
   });
 }
 
