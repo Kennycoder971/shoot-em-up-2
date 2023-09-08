@@ -6,7 +6,8 @@ class State {
   public enemies = [];
   public bullets = [];
   public player = null;
-
+  public screenWidth = 800;
+  public screenHeight = 600;
   private constructor() {}
 
   public static getInstance() {

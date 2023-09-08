@@ -1,27 +1,47 @@
+import state from "./gameState";
+
+type star = {
+  x: number;
+  y: number;
+  radius: number;
+  speed: number;
+  color: string;
+};
+
 export default class UIElements {
-  private background1: HTMLImageElement | null = null;
-  private background2: HTMLImageElement | null = null;
   privateCurrentBackgrounds: HTMLImageElement[] = [];
+  public numStars = 20;
+  public stars: star[] = [];
+  constructor() {
+    this.createStars();
+  }
 
-  constructor() {}
-
-  public setBackGrounds(
-    background1: HTMLImageElement,
-    background2: HTMLImageElement
-  ): void {
-    this.background1 = background1;
-    this.background2 = background2;
+  public createStars(): void {
+    for (let i = 0; i < this.numStars; i++) {
+      this.stars.push({
+        x: Math.random() * state.screenWidth,
+        y: Math.random() * state.screenHeight,
+        radius: Math.random() * 3,
+        speed: Math.random() * 2 + 1,
+        color: "#fff",
+      });
+    }
   }
 
   public renderBackgrounds(context: CanvasRenderingContext2D): void {
-    if (this.background1 && this.background2) {
-      context.drawImage(this.background1, 0, 0);
-      context.drawImage(this.background2, 0, 0);
+    context.fillStyle = "#000";
+    context.fillRect(0, 0, state.screenWidth, state.screenHeight);
 
-      return;
+    for (let i = 0; i < this.stars.length; i++) {
+      const star = this.stars[i];
+      context.beginPath();
+      context.arc(star.x, star.y, star.radius, 0, 2 * Math.PI);
+      context.fillStyle = "#fff";
+      context.fill();
+      star.y -= star.speed;
+      if (star.y < 0) {
+        star.y = state.screenHeight;
+      }
     }
-
-    context.fillStyle = "black";
-    context.fillRect(0, 0, context.canvas.width, context.canvas.height);
   }
 }

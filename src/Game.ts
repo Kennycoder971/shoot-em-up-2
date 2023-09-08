@@ -25,14 +25,11 @@ export default class Game {
 
   public async initialize() {
     const images = await Promise.all([
-      // load background
-      loadAssets("backgrounds/bg", 8),
       // load enemies
       loadAssets("space-ships/en_", 10),
     ]);
 
-    const [backgrounds, enemies] = images;
-    this.uiElements.setBackGrounds(backgrounds[6], backgrounds[7]);
+    const [enemies] = images;
   }
 
   // Game loop
