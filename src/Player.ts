@@ -19,10 +19,10 @@ class Player extends Character {
   public static getInstance() {
     if (!Player.instance) {
       Player.instance = new Player(
-        state.canvasWidth / 2 - 25,
+        state.canvasWidth / 2 - 50,
         state.canvasHeight - 100,
-        50,
-        50,
+        100,
+        100,
         10,
         null,
         100,
@@ -33,8 +33,6 @@ class Player extends Character {
   }
 
   public draw(context: CanvasRenderingContext2D) {
-    console.log("draw player");
-
     if (!this.sprite) {
       context.fillStyle = "#fff";
 

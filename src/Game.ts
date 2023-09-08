@@ -1,6 +1,7 @@
 import UIElements from "./UIElements";
 import { loadAssets } from "./utils/loaders";
 import Player, { playerInstance } from "./Player";
+import Sprite from "./Sprite";
 
 export default class Game {
   public lastFrameTimeMs = 0;
@@ -30,10 +31,20 @@ export default class Game {
       // load enemies images
       loadAssets("space-ships/en_", 1),
       // load player images
-      loadAssets("space-ships/player_", 1),
+      loadAssets("space-ships/player_", 2),
     ]);
 
     const [enemies, players] = images;
+    if (this.player) {
+      const playerSprite = new Sprite(
+        this.player?.x,
+        this.player?.y,
+        this.player?.width,
+        this.player?.height,
+        players[1]
+      );
+      this.player?.setSprite(playerSprite);
+    }
   }
 
   // Game loop
