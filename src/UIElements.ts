@@ -10,7 +10,7 @@ type star = {
 
 export default class UIElements {
   privateCurrentBackgrounds: HTMLImageElement[] = [];
-  public numStars = 20;
+  public numStars = 30;
   public stars: star[] = [];
   constructor() {
     this.createStars();
