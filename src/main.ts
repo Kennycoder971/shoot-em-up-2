@@ -6,4 +6,5 @@ const game = Game.getInstance(canvas);
 
 game.initialize().then(() => {
   console.log("Game initialized");
+  game.startGameLoop();
 });

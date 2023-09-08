@@ -1,6 +1,9 @@
 import { loadAssets } from "./utils/loaders";
 
 export default class Game {
+  public lastFrameTimeMs = 0;
+  public accumulatedTime = 0;
+  public maxTimeStep = 100;
   public static instance: Game | null = null;
   private constructor(public canvas: HTMLCanvasElement) {}
 
@@ -12,8 +15,9 @@ export default class Game {
   }
 
   public async initialize() {
-    // L
-    await Promise.all([
+    const images = await Promise.all([
+      // load background
+      loadAssets("backgrounds/bg", 8),
       // load enemies
       loadAssets("space-ships/en_", 10),
     ]);
@@ -21,20 +25,22 @@ export default class Game {
 
   // Game loop
   public startGameLoop(): void {
-    // Start your game loop here (e.g., using requestAnimationFrame)
-    const gameLoop = () => {
-      // Update game state
-      this.update();
+    // Calculate the number of seconds passed since the last frame
 
-      // Render game
-      this.render();
+    const gameLoop = (timeStamp: number) => {
+      const deltaTime = timeStamp - this.lastFrameTimeMs;
 
-      // Request the next frame
+      if (this.accumulatedTime > this.maxTimeStep) {
+        this.update();
+        this.render();
+        this.accumulatedTime = 0;
+      }
+      this.accumulatedTime += deltaTime;
+      this.lastFrameTimeMs = timeStamp;
       requestAnimationFrame(gameLoop);
     };
 
-    // Start the game loop
-    gameLoop();
+    gameLoop(0);
   }
 
   // Update game state (called in the game loop)
