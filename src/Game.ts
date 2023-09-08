@@ -25,11 +25,13 @@ export default class Game {
 
   public async initialize() {
     const images = await Promise.all([
-      // load enemies
-      loadAssets("space-ships/en_", 10),
+      // load enemies images
+      loadAssets("space-ships/en_", 1),
+      // load player images
+      loadAssets("space-ships/player_", 1),
     ]);
 
-    const [enemies] = images;
+    const [enemies, players] = images;
   }
 
   // Game loop
