@@ -6,7 +6,6 @@ export default class Character {
     public y: number,
     public width: number,
     public height: number,
-    public velocity: number,
     public sprite: Sprite | null,
     public health: number,
     public hasWeapon: boolean

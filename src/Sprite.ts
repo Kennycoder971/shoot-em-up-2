@@ -19,6 +19,12 @@ export default class Sprite {
       context.fillRect(this.x, this.y, this.width, this.height);
       return;
     }
+
     context.drawImage(this.image, this.x, this.y, this.width, this.height);
+  }
+
+  update(x: number, y: number) {
+    this.x = x;
+    this.y = y;
   }
 }

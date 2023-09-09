@@ -6,11 +6,11 @@ import Sprite from "./Sprite";
 export default class Game {
   public lastFrameTimeMs = 0;
   public accumulatedTime = 0;
-  public maxTimeStep = 100;
+  public maxTimeStep = 30;
   public static instance: Game | null = null;
   public context: CanvasRenderingContext2D;
   public uiElements: UIElements;
-  player: Player | null = null;
+  public player: Player | null = null;
 
   private constructor(public canvas: HTMLCanvasElement) {
     this.context = this.canvas.getContext("2d")!;
@@ -69,6 +69,7 @@ export default class Game {
 
   // Update game state (called in the game loop)
   private update(): void {
+    this.player?.update();
     // Update game objects, handle input, check collisions, etc.
   }
 

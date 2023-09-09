@@ -22,7 +22,7 @@ export default class UIElements {
         x: Math.random() * state.canvasWidth,
         y: Math.random() * state.canvasHeight,
         radius: Math.random() * 3,
-        speed: Math.random() * 2 + 1,
+        speed: Math.random() * 5 + 1,
         color: "#fff",
       });
     }
@@ -38,9 +38,9 @@ export default class UIElements {
       context.arc(star.x, star.y, star.radius, 0, 2 * Math.PI);
       context.fillStyle = "#fff";
       context.fill();
-      star.y -= star.speed;
-      if (star.y < 0) {
-        star.y = state.canvasHeight;
+      star.y += star.speed;
+      if (star.y > state.canvasHeight) {
+        star.y = 0;
       }
     }
   }
