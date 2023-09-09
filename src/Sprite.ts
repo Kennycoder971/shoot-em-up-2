@@ -8,8 +8,8 @@ export default class Sprite {
   ) {
     this.x = x;
     this.y = y;
-    this.width = width;
-    this.height = height;
+    this.width = width + 40;
+    this.height = height + 40;
     this.image = image;
   }
 
@@ -24,7 +24,7 @@ export default class Sprite {
   }
 
   update(x: number, y: number) {
-    this.x = x;
-    this.y = y;
+    this.x = x - 20;
+    this.y = y - 20;
   }
 }

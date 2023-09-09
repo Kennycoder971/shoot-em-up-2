@@ -31,7 +31,7 @@ export default class Game {
       // load enemies images
       loadAssets("space-ships/en_", 1),
       // load player images
-      loadAssets("space-ships/player_", 2),
+      loadAssets("space-ships/player_", 10),
     ]);
 
     const [enemies, players] = images;
@@ -41,7 +41,7 @@ export default class Game {
         this.player?.y,
         this.player?.width,
         this.player?.height,
-        players[1]
+        players[5]
       );
       this.player?.setSprite(playerSprite);
     }

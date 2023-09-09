@@ -8,6 +8,7 @@ class State {
   public player = null;
   public canvasWidth = 800;
   public canvasHeight = 600;
+  public debug = true;
   private constructor() {}
 
   public static getInstance() {

@@ -2,6 +2,7 @@ import Character from "./Character";
 import KeyInputs from "./KeyInputs";
 import Sprite from "./Sprite";
 import state from "./gameState";
+import { checkPlayerMapCollisions } from "./utils/collisions";
 class Player extends Character {
   public static instance: Player | null = null;
   public velocityX: number = 0;
@@ -19,6 +20,7 @@ class Player extends Character {
     public hasWeapon: boolean
   ) {
     super(x, y, width, height, null, health, hasWeapon);
+
     this.keyInputs = KeyInputs.getInstance();
   }
 
@@ -27,8 +29,8 @@ class Player extends Character {
       Player.instance = new Player(
         state.canvasWidth / 2 - 50,
         state.canvasHeight - 100,
-        100,
-        100,
+        80,
+        80,
         null,
         100,
         false
@@ -44,14 +46,22 @@ class Player extends Character {
       context.fillRect(this.x, this.y, this.width, this.height);
       return;
     }
-
     this.sprite.draw(context);
+
+    // For debugging purposes
+    if (state.debug) {
+      context.strokeStyle = "#fff";
+      context.strokeRect(this.x, this.y, this.width, this.height);
+    }
+    // End of debugging
   }
 
   public update() {
     this.x += this.velocityX;
     this.y += this.velocityY;
     this.sprite?.update(this.x, this.y);
+
+    checkPlayerMapCollisions(this);
 
     if (this.keyInputs.isDown("left")) {
       this.velocityX = -this.speed;
