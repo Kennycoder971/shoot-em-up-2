@@ -23,6 +23,9 @@ export default class Bullet {
     this.sprite.draw(context);
   }
 
+  public setSprite(sprite: Sprite) {
+    this.sprite = sprite;
+  }
   public update() {
     if (this.direction === "up") {
       this.y -= this.speed;
