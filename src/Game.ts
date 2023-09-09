@@ -2,6 +2,7 @@ import UIElements from "./UIElements";
 import { loadAssets } from "./utils/loaders";
 import Player, { playerInstance } from "./Player";
 import Sprite from "./Sprite";
+import { SparkBullet } from "./weapons/spark";
 
 export default class Game {
   public lastFrameTimeMs = 0;
@@ -32,9 +33,11 @@ export default class Game {
       loadAssets("space-ships/en_", 1),
       // load player images
       loadAssets("space-ships/player_", 10),
+      // projectiles
+      loadAssets("/projectiles/shoot_", 5),
     ]);
 
-    const [enemies, players] = images;
+    const [enemies, players, projectiles] = images;
     if (this.player) {
       const playerSprite = new Sprite(
         this.player?.x,
@@ -45,6 +48,8 @@ export default class Game {
       );
       this.player?.setSprite(playerSprite);
     }
+
+    SparkBullet.setSprite(new Sprite(0, 0, 3, 7, projectiles[0]));
   }
 
   // Game loop

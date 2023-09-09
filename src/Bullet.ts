@@ -15,7 +15,7 @@ export default class Bullet {
 
   public draw(context: CanvasRenderingContext2D) {
     if (!this.sprite) {
-      context.fillStyle = "#fff";
+      context.fillStyle = "yellow";
 
       context.fillRect(this.x, this.y, this.width, this.height);
       return;
