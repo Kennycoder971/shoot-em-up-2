@@ -1,26 +1,34 @@
 import Bullet from "../Bullet";
-import Sprite from "../Sprite";
 import Weapon from "../Weapon";
 import state from "../gameState";
 
 export class SparkBullet extends Bullet {
-  static sprite: Sprite;
   constructor(direction: "up") {
     super(
-      state.player.x + state.player.width / 2,
+      state.player.x + state.player.width / 2 - 5,
       state.player.y,
-      3,
-      7,
+      15,
+      15,
       0,
       0,
-      null,
-      10,
+      20,
       direction
     );
   }
 
-  public static setSprite(sprite: Sprite) {
-    SparkBullet.sprite = sprite;
+  public draw(context: CanvasRenderingContext2D) {
+    if (SparkBullet.bulletImage) {
+      context.drawImage(
+        SparkBullet.bulletImage,
+        this.x,
+        this.y,
+        this.width,
+        this.height
+      );
+      return;
+    }
+    context.fillStyle = "#fff";
+    context.fillRect(this.x, this.y, this.width, this.height);
   }
 }
 
@@ -28,5 +36,9 @@ export default class Spark extends Weapon {
   public bullets: SparkBullet[] = [];
   constructor() {
     super([], 1);
+  }
+
+  public shoot() {
+    this.bullets.push(new SparkBullet("up"));
   }
 }

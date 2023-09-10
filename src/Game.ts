@@ -2,7 +2,8 @@ import UIElements from "./UIElements";
 import { loadAssets } from "./utils/loaders";
 import Player, { playerInstance } from "./Player";
 import Sprite from "./Sprite";
-import { SparkBullet } from "./weapons/spark";
+import { SparkBullet } from "./weapons/Spark";
+import state from "./gameState";
 
 export default class Game {
   public lastFrameTimeMs = 0;
@@ -49,7 +50,7 @@ export default class Game {
       this.player?.setSprite(playerSprite);
     }
 
-    SparkBullet.setSprite(new Sprite(0, 0, 3, 7, projectiles[0]));
+    SparkBullet.bulletImage = projectiles[0];
   }
 
   // Game loop

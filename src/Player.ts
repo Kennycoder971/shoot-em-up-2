@@ -1,14 +1,19 @@
 import Character from "./Character";
 import KeyInputs from "./KeyInputs";
 import Sprite from "./Sprite";
+import Weapon from "./Weapon";
 import state from "./gameState";
 import { checkPlayerMapCollisions } from "./utils/collisions";
+import Spark from "./weapons/Spark";
 class Player extends Character {
   public static instance: Player | null = null;
   public velocityX: number = 0;
   public velocityY: number = 0;
   public speed: number = 10;
   public keyInputs: KeyInputs;
+  public weapons: Weapon[];
+  public equipedWeapon: Weapon;
+  public frameCount = 0;
 
   private constructor(
     public x: number,
@@ -17,18 +22,20 @@ class Player extends Character {
     public height: number,
     public sprite: Sprite | null,
     public health: number,
-    public hasWeapon: boolean
+    public hasWeapon = true
   ) {
     super(x, y, width, height, null, health, hasWeapon);
 
+    this.weapons = [new Spark()];
     this.keyInputs = KeyInputs.getInstance();
+    this.equipedWeapon = this.weapons[0];
   }
 
   public static getInstance() {
     if (!Player.instance) {
       Player.instance = new Player(
-        state.canvasWidth / 2 - 50,
-        state.canvasHeight - 100,
+        350, // Screen width / 2 - player width / 2
+        500, // Screen height - player height
         80,
         80,
         null,
@@ -47,6 +54,7 @@ class Player extends Character {
       return;
     }
     this.sprite.draw(context);
+    this.equipedWeapon.draw(context);
 
     // For debugging purposes
     if (state.debug) {
@@ -57,12 +65,23 @@ class Player extends Character {
   }
 
   public update() {
+    this.frameCount++;
     this.x += this.velocityX;
     this.y += this.velocityY;
     this.sprite?.update(this.x, this.y);
-
+    this.equipedWeapon.update();
+    this.shoot();
+    this.checkPlayerInput();
     checkPlayerMapCollisions(this);
+  }
 
+  public shoot() {
+    if (this.frameCount % 5 === 0) {
+      this.equipedWeapon.shoot();
+    }
+  }
+
+  public checkPlayerInput() {
     if (this.keyInputs.isDown("left")) {
       this.velocityX = -this.speed;
     } else if (this.keyInputs.isDown("right")) {

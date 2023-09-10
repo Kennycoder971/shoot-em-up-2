@@ -1,6 +1,5 @@
-import Sprite from "./Sprite";
-
 export default class Bullet {
+  public static bulletImage: HTMLImageElement | null = null;
   constructor(
     public x: number,
     public y: number,
@@ -8,24 +7,26 @@ export default class Bullet {
     public height: number,
     public velocityX: number,
     public velocityY: number,
-    public sprite: Sprite | null,
     public speed: number,
     public direction: "up" | "down"
   ) {}
 
   public draw(context: CanvasRenderingContext2D) {
-    if (!this.sprite) {
-      context.fillStyle = "yellow";
-
+    if (!Bullet.bulletImage) {
+      context.fillStyle = "#fff";
       context.fillRect(this.x, this.y, this.width, this.height);
       return;
     }
-    this.sprite.draw(context);
+
+    context.drawImage(
+      Bullet.bulletImage,
+      this.x,
+      this.y,
+      this.width,
+      this.height
+    );
   }
 
-  public setSprite(sprite: Sprite) {
-    this.sprite = sprite;
-  }
   public update() {
     if (this.direction === "up") {
       this.y -= this.speed;

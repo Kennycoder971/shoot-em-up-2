@@ -4,7 +4,8 @@ export default class Sprite {
     public y: number,
     public width: number,
     public height: number,
-    public image: HTMLImageElement | null
+    public image: HTMLImageElement | null,
+    public isBullet = false
   ) {
     this.x = x;
     this.y = y;
