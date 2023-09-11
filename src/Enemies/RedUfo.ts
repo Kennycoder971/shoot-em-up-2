@@ -10,14 +10,25 @@ export default class RedUfo extends Enemy {
   update() {
     this.y += this.speedY;
     this.x += this.speedX;
-    if (this.x + this.width > state.canvasWidth || this.x < 0) {
+    if (this.x > state.canvasWidth || this.x < 0) {
       this.speedX *= -1;
     }
   }
 
   draw(context: CanvasRenderingContext2D) {
     if (RedUfo.image) {
-      context.drawImage(RedUfo.image, this.x, this.y, this.width, this.height);
+      context.save();
+      context.translate(this.x, this.y);
+      context.rotate((360 * Math.PI) / 360);
+      context.drawImage(
+        RedUfo.image,
+        -13,
+        -10,
+        this.width + 25,
+        this.height + 20
+      );
+      context.restore();
+
       return;
     }
 
