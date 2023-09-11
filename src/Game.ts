@@ -76,12 +76,14 @@ export default class Game {
   // Update game state (called in the game loop)
   private update(): void {
     this.player?.update();
+    state.updateBullets();
     // Update game objects, handle input, check collisions, etc.
   }
 
   private render(): void {
     this.uiElements.renderBackgrounds(this.context);
     this.player?.draw(this.context);
+    state.bullets.forEach((bullet) => bullet.draw(this.context));
   }
 
   // Handle game over or game completion

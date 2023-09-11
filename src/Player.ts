@@ -54,7 +54,6 @@ class Player extends Character {
       return;
     }
     this.sprite.draw(context);
-    this.equipedWeapon.draw(context);
 
     // For debugging purposes
     if (state.debug) {
@@ -69,7 +68,6 @@ class Player extends Character {
     this.x += this.velocityX;
     this.y += this.velocityY;
     this.sprite?.update(this.x, this.y);
-    this.equipedWeapon.update();
     this.shoot();
     this.checkPlayerInput();
     checkPlayerMapCollisions(this);

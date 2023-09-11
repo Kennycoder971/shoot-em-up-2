@@ -23,6 +23,15 @@ class State {
     }
     return State.instance;
   }
+
+  public updateBullets() {
+    this.bullets.forEach((bullet) => {
+      if (bullet.y < 0 || bullet.y > this.canvasHeight) {
+        this.bullets.splice(this.bullets.indexOf(bullet), 1);
+      }
+      bullet.update();
+    });
+  }
 }
 const state = State.getInstance();
 export default state;

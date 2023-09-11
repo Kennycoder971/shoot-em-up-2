@@ -11,7 +11,7 @@ export class SparkBullet extends Bullet {
       15,
       0,
       0,
-      20,
+      25,
       direction
     );
   }
@@ -40,7 +40,6 @@ export default class Spark extends Weapon {
 
   public shoot() {
     const bullet = new SparkBullet("up");
-    this.bullets.push(bullet);
-    state.bullets = [...this.bullets];
+    state.bullets.push(bullet);
   }
 }
