@@ -1,4 +1,6 @@
 import Bullet from "./Bullet";
+import Enemy from "./Enemies/Enemy";
+import WaveManager from "./Enemies/WaveManager";
 import Player from "./Player";
 
 class State {
@@ -7,14 +9,16 @@ class State {
   public score = 0;
   public health = 10;
   public difficulty = 1;
-  public enemies = [];
+  public enemies: Enemy[] = [];
   public bullets: Bullet[] = [];
+  public waveManager: WaveManager | null = null;
   public canvasWidth = 800;
   public canvasHeight = 600;
   public debug = true;
 
   private constructor() {
     this.player = Player.getInstance();
+    this.waveManager = new WaveManager();
   }
 
   public static getInstance() {
@@ -30,6 +34,22 @@ class State {
         this.bullets.splice(this.bullets.indexOf(bullet), 1);
       }
       bullet.update();
+    });
+  }
+
+  public updateEnemies() {
+    this.waveManager?.run();
+    this.enemies.forEach((enemy) => {
+      if (enemy.y > this.canvasHeight) {
+        this.enemies.splice(this.enemies.indexOf(enemy), 1);
+      }
+      enemy.update();
+    });
+  }
+
+  public drawEnemies(context: CanvasRenderingContext2D) {
+    this.enemies.forEach((enemy) => {
+      enemy.draw(context);
     });
   }
 }

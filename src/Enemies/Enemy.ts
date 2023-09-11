@@ -4,7 +4,8 @@ export default class Enemy {
     public y: number,
     public width: number,
     public height: number,
-    public speed: number,
+    public speedX: number,
+    public speedY: number,
     public health: number
   ) {}
 
